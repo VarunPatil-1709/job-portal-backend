@@ -113,16 +113,25 @@ This project is designed to demonstrate **real-world backend engineering concept
 
 ---
 
-### 7. Frontend Integration
+## 🌐 Frontend
 
-- Frontend is built using **React.js and Tailwind CSS**.
-- Communicates with backend services via REST APIs and WebSockets.
-- Supports:
-  - Job browsing & applications
-  - Notifications
-  - Real-time chat sessions
+The frontend is built using **React.js and Tailwind CSS**.
 
----
+### Features
+
+- Authentication (JWT-based)
+- Job browsing & applications
+- Recruiter dashboard
+- Real-time chat
+- Notifications
+
+### Running Frontend Locally
+
+````bash
+cd frontend
+npm install
+npm run dev   # or npm start
+
 
 ## 🏗️ Design Patterns Used
 
@@ -134,6 +143,16 @@ This project is designed to demonstrate **real-world backend engineering concept
 - Asynchronous Messaging
 
 ---
+
+## 🐳 Kafka Setup (Docker)
+
+Kafka is used for event-driven communication between services
+(Auth → User, Job → Notification, Chat events).
+
+### Run Kafka locally
+```bash
+docker-compose up -d
+
 
 ## ▶️ Running Locally (High Level)
 
@@ -157,7 +176,10 @@ This project is designed to demonstrate **real-world backend engineering concept
 
 ---
 
+
+
 ## 👨‍💻 Author
 
-**Varun Patil**  
+**Varun Patil**
 Backend Developer | Java | Spring Boot | Microservices
+````
