@@ -1,0 +1,163 @@
+# Job Portal Backend – Microservices Architecture
+
+A production-style **microservices-based Job Portal backend** built using **Spring Boot**.  
+This project is designed to demonstrate **real-world backend engineering concepts** such as:
+
+- JWT & Refresh Token authentication
+- Event-driven architecture using Kafka
+- Outbox & idempotent consumer patterns
+- Real-time chat using WebSockets
+- Secure file handling with AWS S3
+- Clean separation of concerns across services
+
+---
+
+## 🧱 Technology Stack
+
+- Java 17
+- Spring Boot
+- Spring Security (JWT + Refresh Token)
+- Apache Kafka
+- MySQL
+- AWS S3 (Resume storage)
+- WebSocket (Real-time chat)
+- OpenFeign (inter-service communication)
+- Maven
+- React.js + Tailwind CSS (Frontend)
+
+---
+
+## 🧩 Microservices Overview
+
+| Service                  | Responsibility                                     |
+| ------------------------ | -------------------------------------------------- |
+| **auth-service**         | Authentication, JWT & refresh token management     |
+| **user-service**         | User profile management (candidate & recruiter)    |
+| **job-service**          | Job posting, job applications & application status |
+| **chat-service**         | Real-time chat using WebSocket                     |
+| **notification-service** | Async in-app notifications using Kafka             |
+
+---
+
+## 🔁 System Architecture & Flow
+
+### 1. Authentication & User Creation Flow
+
+- The system begins with the **Auth Service**, which handles user registration and login.
+- Authentication is implemented using **JWT and Refresh Tokens**.
+- On successful registration, the Auth Service **publishes a Kafka event** containing the `authUserId`.
+- The **User Service consumes this event** and creates the initial user profile.
+- Users then complete their personal or recruiter-specific details via User Service.
+- Recruiter company information is exposed through a **Feign Client** for other services.
+
+> Kafka ensures **loose coupling** between Auth and User services and improves scalability.
+
+---
+
+### 2. Job Posting & Visibility Flow
+
+- Recruiters create job postings using the **Job Service**.
+- While creating a job:
+  - Job Service fetches **company details** from User Service using Feign.
+- Job visibility rules:
+  - Recruiters can view **only their own job postings**.
+  - Candidates (students) can view **all active job postings**.
+
+---
+
+### 3. Job Application & Resume Upload
+
+- Candidates can apply **only once per job**.
+- During application:
+  - Resume is uploaded and stored securely in **AWS S3**.
+  - Only the recruiter who owns the job can download resumes.
+- Application status lifecycle:
+  - `APPLIED`
+  - `SHORTLISTED`
+  - `REJECTED`
+
+---
+
+### 4. Notification System (Event-Driven)
+
+- Important actions (shortlist, reject, chat creation) publish **Kafka events**.
+- The **Notification Service consumes these events** and generates in-app notifications.
+- This keeps notification handling **fully asynchronous and decoupled**.
+
+---
+
+### 5. Chat Session & Real-Time Communication
+
+- After shortlisting a candidate:
+  - Recruiter can create a **Chat Session**.
+  - A unique **Chat ID** is generated.
+  - Notification is sent to the candidate.
+- Chat sessions are categorized as:
+  - **Active**
+  - **Upcoming**
+- Both recruiter and candidate join using the Chat ID.
+- Real-time communication is implemented using:
+  - **WebSocket**
+  - JWT-secured handshake
+- Chat logic is isolated in the **Chat Service**.
+
+---
+
+### 6. Reliability & Data Consistency
+
+- The system uses the **Kafka Outbox Pattern** to ensure:
+  - Reliable event publishing
+  - No message loss
+- **Idempotent consumers** are implemented to safely handle retries.
+- This makes the system resilient to failures and network issues.
+
+---
+
+### 7. Frontend Integration
+
+- Frontend is built using **React.js and Tailwind CSS**.
+- Communicates with backend services via REST APIs and WebSockets.
+- Supports:
+  - Job browsing & applications
+  - Notifications
+  - Real-time chat sessions
+
+---
+
+## 🏗️ Design Patterns Used
+
+- Microservices Architecture
+- Event-Driven Architecture
+- Outbox Pattern
+- Idempotent Consumer Pattern
+- Token-based Authentication
+- Asynchronous Messaging
+
+---
+
+## ▶️ Running Locally (High Level)
+
+1. Clone the repository
+2. Configure MySQL, Kafka, and AWS S3 credentials
+3. Run services individually using Maven
+4. Use Postman to test APIs
+5. Run frontend separately
+
+> Detailed setup instructions can be added later.
+
+---
+
+## 🚀 Future Enhancements
+
+- API Gateway
+- Centralized logging & monitoring
+- Distributed tracing
+- Redis-based rate limiting
+- Kubernetes deployment
+
+---
+
+## 👨‍💻 Author
+
+**Varun Patil**  
+Backend Developer | Java | Spring Boot | Microservices
