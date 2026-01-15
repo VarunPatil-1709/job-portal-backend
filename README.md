@@ -185,7 +185,6 @@ To ensure reliability and consistency:
 
 Kafka can be started locally using Docker Compose.
 
-```bash
 docker-compose up -d
 
 
