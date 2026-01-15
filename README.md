@@ -127,32 +127,11 @@ The frontend is built using **React.js and Tailwind CSS**.
 
 ### Running Frontend Locally
 
-````bash
+```bash
 cd frontend
 npm install
 npm run dev   # or npm start
-
-
-## 🏗️ Design Patterns Used
-
-- Microservices Architecture
-- Event-Driven Architecture
-- Outbox Pattern
-- Idempotent Consumer Pattern
-- Token-based Authentication
-- Asynchronous Messaging
-
----
-
-## 🐳 Kafka Setup (Docker)
-
-Kafka is used for event-driven communication between services
-(Auth → User, Job → Notification, Chat events).
-
-### Run Kafka locally
-```bash
-docker-compose up -d
-
+```
 
 ## ▶️ Running Locally (High Level)
 
@@ -176,10 +155,11 @@ docker-compose up -d
 
 ---
 
-
-
 ## 👨‍💻 Author
 
 **Varun Patil**
 Backend Developer | Java | Spring Boot | Microservices
-````
+
+```
+
+```
