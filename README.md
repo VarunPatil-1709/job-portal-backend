@@ -160,6 +160,3 @@ npm run dev   # or npm start
 **Varun Patil**
 Backend Developer | Java | Spring Boot | Microservices
 
-```
-
-```
