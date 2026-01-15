@@ -145,6 +145,50 @@ npm run dev   # or npm start
 
 ---
 
+## 🐳 Kafka & Event-Driven Communication
+
+Apache Kafka is used as the **backbone of asynchronous communication** between microservices in the system.  
+It enables **loose coupling, scalability, and reliability** across services.
+
+---
+
+### 🔄 Kafka Usage in the System
+
+Kafka is used for the following event flows:
+
+- **Auth Service → User Service**
+  - Publishes `USER_CREATED` events after successful registration.
+- **Job Service → Notification Service**
+  - Publishes events for job application actions such as:
+    - Job applied
+    - Job shortlisted
+    - Job rejected
+- **Chat Service → Notification Service**
+  - Publishes events when a chat session is created.
+
+---
+
+### 🧩 Reliability Patterns
+
+To ensure reliability and consistency:
+
+- **Outbox Pattern**
+  - Events are first stored in the database and then published to Kafka.
+  - Prevents event loss during service failures.
+- **Idempotent Consumers**
+  - Consumers safely handle duplicate events.
+  - Ensures exactly-once logical processing.
+
+---
+
+### 🐳 Running Kafka Locally (Docker)
+
+Kafka can be started locally using Docker Compose.
+
+```bash
+docker-compose up -d
+
+
 ## 🚀 Future Enhancements
 
 - API Gateway
